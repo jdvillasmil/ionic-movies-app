@@ -1,0 +1,38 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return isAuthenticated() && request.auth.uid == uid;
+    }
+
+    // User profiles: read requires auth, write requires ownership
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isOwner(userId);
+    }
+
+    // Media documents: open reads for guest browsing, writes require auth
+    match /media/{mediaId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+
+      // Reviews: open reads, writes require auth + ownership (document ID = userId)
+      match /reviews/{userId} {
+        allow read: if true;
+        allow write: if isOwner(userId);
+      }
+    }
+
+    // Deny all other reads and writes
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
