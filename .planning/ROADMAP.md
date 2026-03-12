@@ -44,7 +44,7 @@ Plans:
   3. User can log out from any page and is redirected to the login or guest view
   4. User can update their display name and avatar on the profile page and see the changes reflected immediately
   5. User can delete their account and all their Firestore data (user document and reviews) is removed along with the Auth record
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 
 Plans:
 - [ ] 02-01-PLAN.md — AuthService, UserService, auth guard, UserAvatar component, profile route protection
@@ -82,6 +82,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | 2026-03-08 |
-| 2. Auth and Profiles | 0/3 | Not started | - |
+| 2. Auth and Profiles | 1/3 | In Progress|  |
 | 3. Media Browsing | 0/TBD | Not started | - |
 | 4. Detail and Reviews | 0/TBD | Not started | - |
