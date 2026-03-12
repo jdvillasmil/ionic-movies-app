@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-auth-and-profiles/02-01-PLAN.md
-last_updated: "2026-03-12T13:41:10Z"
+stopped_at: Completed 02-auth-and-profiles/02-02-PLAN.md
+last_updated: "2026-03-12T17:52:50.252Z"
 last_activity: 2026-03-12 — Auth foundation created (plan 02-01 complete)
 progress:
   total_phases: 4
   completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 5
+  completed_plans: 4
   percent: 60
 ---
 
@@ -51,6 +51,7 @@ Progress: [██████░░░░] 60%
 - Trend: stable
 
 *Updated after each plan completion*
+| Phase 02-auth-and-profiles P02 | 8 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -68,6 +69,9 @@ Recent decisions affecting current work:
 - [Phase 02-auth]: Used user() (not authState()) in authGuard — authState emits null before Firebase restores session from storage
 - [Phase 02-auth]: deleteUserAndReviews deletes Firestore data before Auth record — security rules require auth
 - [Phase 02-auth]: defer() wraps Firestore calls in UserService — defers Firebase type validation to subscription time
+- [Phase 02-auth-and-profiles]: displayName derived from email prefix on registration — no form field per user decision, editable on profile page
+- [Phase 02-auth-and-profiles]: IonSegment uses (ionChange) manual patching instead of formControlName — avoids known Ionic/Angular incompatibility
+- [Phase 02-auth-and-profiles]: loginError is a boolean flag not a string — spec tests verify true/false, error message hardcoded in template
 
 ### Pending Todos
 
@@ -81,6 +85,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T13:41:10Z
-Stopped at: Completed 02-auth-and-profiles/02-01-PLAN.md
-Resume file: .planning/phases/02-auth-and-profiles/02-02-PLAN.md
+Last session: 2026-03-12T17:52:50.249Z
+Stopped at: Completed 02-auth-and-profiles/02-02-PLAN.md
+Resume file: None
