@@ -60,7 +60,13 @@ Plans:
   2. Searching for a movie title returns up to 20 results from TMDB, and a second identical search loads from Firestore cache (no TMDB network call visible in dev tools)
   3. User can filter the home list by genre, release date range, and score, and the list updates to match the selected criteria
   4. User can sort the home list by highest score and by most recent, and the order changes accordingly
-**Plans**: TBD
+**Plans:** 4 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — TmdbService (types, cache-first, trending/search/discover) + Wave 0 test scaffolds
+- [ ] 03-02-PLAN.md — MediaCardComponent + Home page (2-column grid, skeleton, infinite scroll, live filter modal)
+- [ ] 03-03-PLAN.md — Search page (debounced search, cache-first) + Phase 4 media detail stub route
+- [ ] 03-04-PLAN.md — Full test suite gate + human visual verification of all BROW requirements
 
 ### Phase 4: Detail and Reviews
 **Goal**: Users can view the full detail page for any movie or series (including dual ratings and the review list), and logged-in users can submit one review per title, edit it, and delete it — with dual ratings recalculating automatically on every change.
@@ -83,5 +89,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | 2026-03-08 |
 | 2. Auth and Profiles | 3/3 | Complete   | 2026-03-12 |
-| 3. Media Browsing | 0/TBD | Not started | - |
+| 3. Media Browsing | 0/4 | Not started | - |
 | 4. Detail and Reviews | 0/TBD | Not started | - |
