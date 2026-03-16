@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { tmdbInterceptor } from './tmdb.interceptor';
+import * as envModule from '../../../environments/environment';
 
 describe('tmdbInterceptor', () => {
   let http: HttpClient;
@@ -31,13 +32,19 @@ describe('tmdbInterceptor', () => {
     req.flush({});
   });
 
-  it('should add Authorization Bearer header to TMDB requests', () => {
+  it('should add Authorization Bearer header to TMDB requests when bearer token is configured', () => {
+    // Temporarily override the bearerToken with a real-looking token
+    const originalBearerToken = envModule.environment.tmdb.bearerToken;
+    (envModule.environment.tmdb as { bearerToken: string }).bearerToken = 'test-bearer-token-value';
+
     http.get('https://api.themoviedb.org/3/movie/popular').subscribe();
     const req = httpTesting.expectOne((r) =>
       r.url.startsWith('https://api.themoviedb.org')
     );
     expect(req.request.headers.get('Authorization')).toMatch(/^Bearer /);
     req.flush({});
+
+    (envModule.environment.tmdb as { bearerToken: string }).bearerToken = originalBearerToken;
   });
 
   it('should NOT modify non-TMDB requests (Firebase calls untouched)', () => {
