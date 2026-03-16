@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Firebase + TMDB configured, secured, and ready for feature development (2026-03-08)
 - [x] **Phase 2: Auth and Profiles** - Users can register, log in, manage their profile, and delete their account (completed 2026-03-12)
-- [ ] **Phase 3: Media Browsing** - Guests and logged-in users can search, browse, filter, and sort movies and series
+- [x] **Phase 3: Media Browsing** - Guests and logged-in users can search, browse, filter, and sort movies and series (completed 2026-03-16)
 - [ ] **Phase 4: Detail and Reviews** - Users can view full media detail and submit, edit, and delete reviews with dual ratings
 
 ## Phase Details
@@ -60,7 +60,7 @@ Plans:
   2. Searching for a movie title returns up to 20 results from TMDB, and a second identical search loads from Firestore cache (no TMDB network call visible in dev tools)
   3. User can filter the home list by genre, release date range, and score, and the list updates to match the selected criteria
   4. User can sort the home list by highest score and by most recent, and the order changes accordingly
-**Plans:** 3/4 plans executed
+**Plans:** 4/4 plans complete
 
 Plans:
 - [ ] 03-01-PLAN.md — TmdbService (types, cache-first, trending/search/discover) + Wave 0 test scaffolds
@@ -89,5 +89,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | 2026-03-08 |
 | 2. Auth and Profiles | 3/3 | Complete   | 2026-03-12 |
-| 3. Media Browsing | 3/4 | In Progress|  |
+| 3. Media Browsing | 4/4 | Complete   | 2026-03-16 |
 | 4. Detail and Reviews | 0/TBD | Not started | - |
