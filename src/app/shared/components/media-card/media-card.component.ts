@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { IonCard, IonCardContent, IonImg } from '@ionic/angular/standalone';
 import { MediaItem } from '../../../core/services/tmdb.service';
 import { TmdbImagePipe } from '../../../core/pipes/tmdb-image.pipe';
@@ -7,7 +6,7 @@ import { TmdbImagePipe } from '../../../core/pipes/tmdb-image.pipe';
 @Component({
   selector: 'app-media-card',
   standalone: true,
-  imports: [IonCard, IonCardContent, IonImg, NgIf, TmdbImagePipe],
+  imports: [IonCard, IonCardContent, IonImg, TmdbImagePipe],
   template: `
     <ion-card class="media-card" (click)="cardTap.emit(item)">
       <ion-img [src]="item.posterPath | tmdbImage:'w185'" class="card-poster"></ion-img>

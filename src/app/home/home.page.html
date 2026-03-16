@@ -1,9 +1,126 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Inicio</ion-title>
+    <ion-button slot="end" fill="clear" class="filter-btn" (click)="filterModalOpen = true">
+      <ion-icon name="options-outline" [color]="hasActiveFilters ? 'primary' : 'medium'"></ion-icon>
+      <ion-badge *ngIf="hasActiveFilters" color="danger" class="filter-badge">{{ activeFilterCount }}</ion-badge>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <p>Bienvenido a CineApp</p>
+
+  <!-- Skeleton loading state -->
+  <div *ngIf="isLoading" class="media-grid">
+    <div *ngFor="let s of skeletonItems" class="skeleton-card">
+      <ion-skeleton-text [animated]="true" class="skeleton-poster"></ion-skeleton-text>
+      <div class="skeleton-body">
+        <ion-skeleton-text [animated]="true" class="skeleton-title"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" class="skeleton-year"></ion-skeleton-text>
+      </div>
+    </div>
+  </div>
+
+  <!-- Real content grid -->
+  <div *ngIf="!isLoading" class="media-grid">
+    <app-media-card
+      *ngFor="let item of items"
+      [item]="item"
+      (cardTap)="navigateToDetail($event)">
+    </app-media-card>
+  </div>
+
+  <!-- Infinite scroll -->
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)" [disabled]="allLoaded">
+    <ion-infinite-scroll-content loadingText="Cargando..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
 </ion-content>
+
+<!-- Filter modal -->
+<ion-modal [isOpen]="filterModalOpen" (didDismiss)="filterModalOpen = false">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Filtros</ion-title>
+        <ion-button slot="end" fill="clear" (click)="filterModalOpen = false">Listo</ion-button>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="filter-content">
+
+      <!-- Sort order -->
+      <div class="filter-section">
+        <h3 class="filter-label">Ordenar por</h3>
+        <div class="chip-row">
+          <ion-chip
+            [color]="activeFilters.sortBy === 'popularity.desc' ? 'primary' : 'default'"
+            (click)="setSortBy('popularity.desc')">
+            <ion-label>Mas populares</ion-label>
+          </ion-chip>
+          <ion-chip
+            [color]="activeFilters.sortBy === 'vote_average.desc' ? 'primary' : 'default'"
+            (click)="setSortBy('vote_average.desc')">
+            <ion-label>Mayor puntuacion</ion-label>
+          </ion-chip>
+          <ion-chip
+            [color]="activeFilters.sortBy === 'primary_release_date.desc' ? 'primary' : 'default'"
+            (click)="setSortBy('primary_release_date.desc')">
+            <ion-label>Mas recientes</ion-label>
+          </ion-chip>
+        </div>
+      </div>
+
+      <!-- Genres -->
+      <div class="filter-section" *ngIf="genres.length > 0">
+        <h3 class="filter-label">Generos</h3>
+        <div class="chip-row">
+          <ion-chip
+            *ngFor="let genre of genres"
+            [color]="isGenreActive(genre.id) ? 'primary' : 'default'"
+            (click)="toggleGenre(genre.id)">
+            <ion-label>{{ genre.name }}</ion-label>
+          </ion-chip>
+        </div>
+      </div>
+
+      <!-- Year range -->
+      <div class="filter-section">
+        <h3 class="filter-label">Ano</h3>
+        <div class="year-row">
+          <div class="year-input-group">
+            <label>Desde</label>
+            <input
+              type="number"
+              class="year-input"
+              placeholder="2000"
+              [(ngModel)]="activeFilters.yearFrom"
+              (ngModelChange)="onFilterChange()">
+          </div>
+          <div class="year-input-group">
+            <label>Hasta</label>
+            <input
+              type="number"
+              class="year-input"
+              placeholder="2026"
+              [(ngModel)]="activeFilters.yearTo"
+              (ngModelChange)="onFilterChange()">
+          </div>
+        </div>
+      </div>
+
+      <!-- Minimum score -->
+      <div class="filter-section">
+        <h3 class="filter-label">Puntuacion minima: {{ activeFilters.minScore }}</h3>
+        <ion-range
+          min="0"
+          max="10"
+          step="0.5"
+          [(ngModel)]="activeFilters.minScore"
+          (ionChange)="onFilterChange()">
+        </ion-range>
+      </div>
+
+    </ion-content>
+  </ng-template>
+</ion-modal>
