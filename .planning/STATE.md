@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-media-browsing/03-01-PLAN.md
-last_updated: "2026-03-16T21:36:00Z"
-last_activity: 2026-03-16 — TmdbService and Wave 0 test scaffolds created (plan 03-01 complete)
+stopped_at: Completed 03-media-browsing/03-02-PLAN.md
+last_updated: "2026-03-16T21:40:00Z"
+last_activity: 2026-03-16 — MediaCardComponent and HomePage with grid/infinite-scroll/filter-modal created (plan 03-02 complete)
 progress:
   total_phases: 4
   completed_phases: 2
-  total_plans: 6
-  completed_plans: 6
-  percent: 65
+  total_plans: 7
+  completed_plans: 5
+  percent: 71
 ---
 
 # Project State
@@ -26,18 +26,18 @@ See: .planning/PROJECT.md (updated 2026-03-07)
 ## Current Position
 
 Phase: 3 of 4 (Media Browsing)
-Plan: 1 of 4 in current phase (03-01 complete, 03-02, 03-03, 03-04 remaining)
+Plan: 2 of 4 in current phase (03-01, 03-02 complete, 03-03, 03-04 remaining)
 Status: In progress
-Last activity: 2026-03-16 — TmdbService created with cache-first Firestore strategy (plan 03-01 complete)
+Last activity: 2026-03-16 — MediaCardComponent and HomePage with grid/infinite-scroll/filter-modal created (plan 03-02 complete)
 
-Progress: [███████░░░] 65%
+Progress: [███████░░░] 71%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 6
+- Total plans completed: 7
 - Average duration: 5 min
-- Total execution time: 0.47 hours
+- Total execution time: 0.54 hours
 
 **By Phase:**
 
@@ -45,16 +45,17 @@ Progress: [███████░░░] 65%
 |-------|-------|-------|----------|
 | 01-foundation | 2 | 8 min | 4 min |
 | 02-auth-and-profiles | 3 | 38 min | 13 min |
-| 03-media-browsing | 1 | 14 min | 14 min |
+| 03-media-browsing | 2 | 18 min | 9 min |
 
 **Recent Trend:**
-- Last 5 plans: 14 min
+- Last 5 plans: 9 min
 - Trend: stable
 
 *Updated after each plan completion*
 | Phase 02-auth-and-profiles P02 | 8 | 2 tasks | 4 files |
 | Phase 02-auth-and-profiles P03 | 25 | 2 tasks | 2 files |
 | Phase 03-media-browsing P01 | 14 | 2 tasks | 5 files |
+| Phase 03-media-browsing P02 | 4 | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -80,6 +81,9 @@ Recent decisions affecting current work:
 - [Phase 03-media-browsing]: Protected firestoreGet/firestoreSet methods pattern — ES module exports not writable in Jasmine, subclass override is the solution
 - [Phase 03-media-browsing]: fakeAsync + flushMicrotasks required for testing Promise-gated HTTP calls — cache check resolves before HTTP call initiates
 - [Phase 03-media-browsing]: TV discover sort maps primary_release_date.desc to first_air_date.desc — TMDB TV endpoint rejects primary_release_date sort
+- [Phase 03-media-browsing]: IonModal uses ng-template wrapper for lazy-rendered filter panel content (Ionic requirement)
+- [Phase 03-media-browsing]: loadMore always calls event.target.complete() in finally block to prevent infinite scroll spinner hang
+- [Phase 03-media-browsing]: Filter state uses immutable spread pattern to trigger Angular change detection cleanly
 
 ### Pending Todos
 
@@ -93,6 +97,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-16T21:36:00Z
-Stopped at: Completed 03-media-browsing/03-01-PLAN.md
-Resume file: .planning/phases/03-media-browsing/03-02-PLAN.md
+Last session: 2026-03-16T21:40:00Z
+Stopped at: Completed 03-media-browsing/03-02-PLAN.md
+Resume file: .planning/phases/03-media-browsing/03-03-PLAN.md
