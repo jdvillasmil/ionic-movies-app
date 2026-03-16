@@ -3,30 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 3 context gathered
-last_updated: "2026-03-13T01:10:31.842Z"
-last_activity: 2026-03-12 — Auth foundation created (plan 02-01 complete)
-progress:
-  total_phases: 4
-  completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
----
-
----
-gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
-status: executing
-stopped_at: Completed 02-auth-and-profiles/02-03-PLAN.md
-last_updated: "2026-03-12T18:03:40.690Z"
-last_activity: 2026-03-12 — Auth foundation created (plan 02-01 complete)
+stopped_at: Completed 03-media-browsing/03-01-PLAN.md
+last_updated: "2026-03-16T21:36:00Z"
+last_activity: 2026-03-16 — TmdbService and Wave 0 test scaffolds created (plan 03-01 complete)
 progress:
   total_phases: 4
   completed_phases: 2
-  total_plans: 5
-  completed_plans: 5
-  percent: 60
+  total_plans: 6
+  completed_plans: 6
+  percent: 65
 ---
 
 # Project State
@@ -36,38 +21,40 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-07)
 
 **Core value:** Users can search real movies/series, read dual-perspective ratings (normal users vs. critics), and contribute their own scored reviews — all backed by live TMDB data cached in Firestore.
-**Current focus:** Phase 2 — Auth and Profiles
+**Current focus:** Phase 3 — Media Browsing
 
 ## Current Position
 
-Phase: 2 of 4 (Auth and Profiles)
-Plan: 1 of 3 in current phase (02-01 complete, 02-02 and 02-03 remaining)
+Phase: 3 of 4 (Media Browsing)
+Plan: 1 of 4 in current phase (03-01 complete, 03-02, 03-03, 03-04 remaining)
 Status: In progress
-Last activity: 2026-03-12 — Auth foundation created (plan 02-01 complete)
+Last activity: 2026-03-16 — TmdbService created with cache-first Firestore strategy (plan 03-01 complete)
 
-Progress: [██████░░░░] 60%
+Progress: [███████░░░] 65%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
-- Average duration: 4 min
-- Total execution time: 0.23 hours
+- Total plans completed: 6
+- Average duration: 5 min
+- Total execution time: 0.47 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation | 2 | 8 min | 4 min |
-| 02-auth-and-profiles | 1 | 5 min | 5 min |
+| 02-auth-and-profiles | 3 | 38 min | 13 min |
+| 03-media-browsing | 1 | 14 min | 14 min |
 
 **Recent Trend:**
-- Last 5 plans: 5 min
+- Last 5 plans: 14 min
 - Trend: stable
 
 *Updated after each plan completion*
 | Phase 02-auth-and-profiles P02 | 8 | 2 tasks | 4 files |
 | Phase 02-auth-and-profiles P03 | 25 | 2 tasks | 2 files |
+| Phase 03-media-browsing P01 | 14 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -89,6 +76,10 @@ Recent decisions affecting current work:
 - [Phase 02-auth-and-profiles]: IonSegment uses (ionChange) manual patching instead of formControlName — avoids known Ionic/Angular incompatibility
 - [Phase 02-auth-and-profiles]: loginError is a boolean flag not a string — spec tests verify true/false, error message hardcoded in template
 - [Phase 02-auth-and-profiles]: @ionic/angular/standalone vs @ionic/angular export different DI tokens — always match spec imports to component imports
+- [Phase 03-media-browsing]: TmdbService methods return Promise<TmdbPageResult> rather than Observable — cache-first async flow is cleaner as a Promise
+- [Phase 03-media-browsing]: Protected firestoreGet/firestoreSet methods pattern — ES module exports not writable in Jasmine, subclass override is the solution
+- [Phase 03-media-browsing]: fakeAsync + flushMicrotasks required for testing Promise-gated HTTP calls — cache check resolves before HTTP call initiates
+- [Phase 03-media-browsing]: TV discover sort maps primary_release_date.desc to first_air_date.desc — TMDB TV endpoint rejects primary_release_date sort
 
 ### Pending Todos
 
@@ -102,6 +93,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-13T01:10:31.811Z
-Stopped at: Phase 3 context gathered
-Resume file: .planning/phases/03-media-browsing/03-CONTEXT.md
+Last session: 2026-03-16T21:36:00Z
+Stopped at: Completed 03-media-browsing/03-01-PLAN.md
+Resume file: .planning/phases/03-media-browsing/03-02-PLAN.md
