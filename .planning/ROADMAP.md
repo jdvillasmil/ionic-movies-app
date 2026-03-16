@@ -60,7 +60,7 @@ Plans:
   2. Searching for a movie title returns up to 20 results from TMDB, and a second identical search loads from Firestore cache (no TMDB network call visible in dev tools)
   3. User can filter the home list by genre, release date range, and score, and the list updates to match the selected criteria
   4. User can sort the home list by highest score and by most recent, and the order changes accordingly
-**Plans:** 2/4 plans executed
+**Plans:** 3/4 plans executed
 
 Plans:
 - [ ] 03-01-PLAN.md — TmdbService (types, cache-first, trending/search/discover) + Wave 0 test scaffolds
@@ -89,5 +89,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete | 2026-03-08 |
 | 2. Auth and Profiles | 3/3 | Complete   | 2026-03-12 |
-| 3. Media Browsing | 2/4 | In Progress|  |
+| 3. Media Browsing | 3/4 | In Progress|  |
 | 4. Detail and Reviews | 0/TBD | Not started | - |
