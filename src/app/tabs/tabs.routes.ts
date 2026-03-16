@@ -20,4 +20,8 @@ export const tabRoutes: Routes = [
     loadComponent: () => import('../profile/profile.page').then((m) => m.ProfilePage),
     canActivate: [authGuard],
   },
+  {
+    path: 'media/:mediaType/:id',
+    loadComponent: () => import('../media-detail/media-detail.page').then((m) => m.MediaDetailPage),
+  },
 ];
