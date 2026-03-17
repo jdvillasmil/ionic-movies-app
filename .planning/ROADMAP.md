@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation** - Firebase + TMDB configured, secured, and ready for feature development (2026-03-08)
 - [x] **Phase 2: Auth and Profiles** - Users can register, log in, manage their profile, and delete their account (completed 2026-03-12)
-- [x] **Phase 3: Media Browsing** - Guests and logged-in users can search, browse, filter, and sort movies and series (completed 2026-03-16)
+- [x] **Phase 3: Media Browsing** - Guests and logged-in users can search, browse, filter, and sort movies and series (completed 2026-03-16)
 - [ ] **Phase 4: Detail and Reviews** - Users can view full media detail and submit, edit, and delete reviews with dual ratings
 
 ## Phase Details
@@ -79,6 +79,13 @@ Plans:
   4. Logged-in user can submit a review with a score (1-10) and text; submitting a second review to the same title is blocked
   5. User can edit their review and the dual rating averages update immediately to reflect the new score
   6. User can delete their review and the dual rating averages recalculate to exclude the deleted score
+**Plans:** 4 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — Wave 0 scaffolds (test stubs, Firestore rules + collectionGroup, ProfilePage fix)
+- [ ] 04-02-PLAN.md — ReviewService TDD (CRUD + runTransaction aggregates) + TmdbService.getDetail TDD
+- [ ] 04-03-PLAN.md — MediaDetailPage full implementation TDD (replaces Phase 3 stub)
+- [ ] 04-04-PLAN.md — Full test suite gate + human visual verification of all DETL/REVW requirements
 
 ## Progress
 
@@ -90,4 +97,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | 1. Foundation | 2/2 | Complete | 2026-03-08 |
 | 2. Auth and Profiles | 3/3 | Complete   | 2026-03-12 |
 | 3. Media Browsing | 4/4 | Complete   | 2026-03-16 |
-| 4. Detail and Reviews | 0/TBD | Not started | - |
+| 4. Detail and Reviews | 0/4 | Not started | - |
