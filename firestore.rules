@@ -30,6 +30,13 @@ service cloud.firestore {
       }
     }
 
+    // Collection group rule — enables collectionGroup('reviews') queries from ProfilePage
+    // Required: collectionGroup queries need explicit top-level collection group match
+    match /{path=**}/reviews/{userId} {
+      allow read: if true;
+      allow write: if isOwner(userId);
+    }
+
     // Deny all other reads and writes
     match /{document=**} {
       allow read, write: if false;

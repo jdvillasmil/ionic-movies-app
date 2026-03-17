@@ -4,7 +4,7 @@ import {
   doc,
   setDoc,
   docData,
-  collection,
+  collectionGroup,
   query,
   where,
   getDocs,
@@ -50,8 +50,8 @@ export class UserService {
   async deleteUserAndReviews(uid: string): Promise<void> {
     const batch = writeBatch(this.firestore);
 
-    // Query reviews where userId == uid
-    const reviewsRef = collection(this.firestore, 'reviews');
+    // Query reviews where userId == uid across subcollections
+    const reviewsRef = collectionGroup(this.firestore, 'reviews');
     const reviewsQuery = query(reviewsRef, where('userId', '==', uid));
     const reviewsSnapshot = await getDocs(reviewsQuery);
 

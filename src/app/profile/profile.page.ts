@@ -28,7 +28,7 @@ import { Observable, of, Subscription, firstValueFrom } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import {
   Firestore,
-  collection,
+  collectionGroup,
   query,
   where,
   getDocs,
@@ -476,7 +476,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   private async loadReviews(uid: string): Promise<void> {
     try {
-      const reviewsRef = collection(this.firestore, 'reviews');
+      const reviewsRef = collectionGroup(this.firestore, 'reviews');
       const reviewsQuery = query(reviewsRef, where('userId', '==', uid));
       const snapshot = await getDocs(reviewsQuery);
       this.reviews = snapshot.docs.map((d) => d.data() as ReviewPreview);
