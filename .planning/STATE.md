@@ -3,11 +3,27 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
+stopped_at: Completed 04-detail-and-reviews/04-02-PLAN.md
+last_updated: "2026-03-17T04:29:29.090Z"
+last_activity: 2026-03-17 — Wave 0 test scaffolds + Firestore collectionGroup fix (plan 04-01 complete)
+progress:
+  total_phases: 4
+  completed_phases: 2
+  total_plans: 11
+  completed_plans: 9
+  percent: 82
+---
+
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: executing
 stopped_at: Completed 04-detail-and-reviews/04-01-PLAN.md
 last_updated: "2026-03-17T04:22:21.247Z"
 last_activity: 2026-03-16 — Search page with debounce + media detail stub route added (plan 03-03 complete)
 progress:
-  total_phases: 4
+  [████████░░] 82%
   completed_phases: 2
   total_plans: 11
   completed_plans: 8
@@ -76,6 +92,7 @@ Progress: [███████░░░] 73%
 | Phase 03-media-browsing P04 | 3 | 1 tasks | 1 files |
 | Phase 03-media-browsing P04 | 5 | 2 tasks | 1 files |
 | Phase 04-detail-and-reviews P01 | 4 | 3 tasks | 6 files |
+| Phase 04-detail-and-reviews P02 | 4 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -110,6 +127,8 @@ Recent decisions affecting current work:
 - [Phase 03-media-browsing]: Visual checkpoint pattern: ng test green + ng build clean + human visual approval = phase sign-off (plan 03-04)
 - [Phase 04-detail-and-reviews]: Review documents at media/{mediaId}/reviews/{userId} subcollection — collectionGroup query required for cross-media review lookup in ProfilePage and account deletion
 - [Phase 04-detail-and-reviews]: Wave 0 spec scaffolds use xit so pending tests don't block CI while production code is absent
+- [Phase 04-detail-and-reviews]: TestableReviewService overrides makeRef to return plain path objects — Firestore doc() requires real instance, protected method override matches established TestableTmdbService pattern
+- [Phase 04-detail-and-reviews]: Protected methods (makeRef, runTx, getDocSnap, getDocsSnap) in ReviewService enable full unit test isolation without constructor injection complexity
 
 ### Pending Todos
 
@@ -123,6 +142,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-17T04:22:21.243Z
-Stopped at: Completed 04-detail-and-reviews/04-01-PLAN.md
+Last session: 2026-03-17T04:29:29.086Z
+Stopped at: Completed 04-detail-and-reviews/04-02-PLAN.md
 Resume file: None

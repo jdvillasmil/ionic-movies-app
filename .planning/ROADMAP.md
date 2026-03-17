@@ -79,7 +79,7 @@ Plans:
   4. Logged-in user can submit a review with a score (1-10) and text; submitting a second review to the same title is blocked
   5. User can edit their review and the dual rating averages update immediately to reflect the new score
   6. User can delete their review and the dual rating averages recalculate to exclude the deleted score
-**Plans:** 1/4 plans executed
+**Plans:** 2/4 plans executed
 
 Plans:
 - [ ] 04-01-PLAN.md — Wave 0 scaffolds (test stubs, Firestore rules + collectionGroup, ProfilePage fix)
@@ -97,4 +97,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | 1. Foundation | 2/2 | Complete | 2026-03-08 |
 | 2. Auth and Profiles | 3/3 | Complete   | 2026-03-12 |
 | 3. Media Browsing | 4/4 | Complete   | 2026-03-16 |
-| 4. Detail and Reviews | 1/4 | In Progress|  |
+| 4. Detail and Reviews | 2/4 | In Progress|  |
