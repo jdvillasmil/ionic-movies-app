@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, forkJoin, from } from 'rxjs';
+import { Observable, forkJoin, from, firstValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Firestore, doc, getDoc, setDoc } from '@angular/fire/firestore';
 
@@ -12,6 +12,23 @@ export interface MediaItem {
   posterPath: string | null;
   voteAverage: number;
   genreIds: number[];
+}
+
+export interface CastMember {
+  name: string;
+  character: string;
+  profilePath: string | null;
+}
+
+export interface MediaDetail {
+  id: number;
+  mediaType: 'movie' | 'tv';
+  title: string;
+  posterPath: string | null;
+  overview: string;
+  releaseDate: string;
+  genres: string[];
+  cast: CastMember[];
 }
 
 export interface FilterState {
@@ -111,6 +128,32 @@ export class TmdbService {
         })
       );
     });
+  }
+
+  async getDetail(id: number, mediaType: 'movie' | 'tv'): Promise<MediaDetail> {
+    const endpoint =
+      mediaType === 'movie'
+        ? `${this.BASE}/movie/${id}?append_to_response=credits`
+        : `${this.BASE}/tv/${id}?append_to_response=credits`;
+
+    const raw: any = await firstValueFrom(this.http.get<any>(endpoint));
+
+    return {
+      id: raw.id,
+      mediaType,
+      title: mediaType === 'tv' ? (raw.name ?? '') : (raw.title ?? ''),
+      posterPath: raw.poster_path ?? null,
+      overview: raw.overview ?? '',
+      releaseDate: mediaType === 'tv' ? (raw.first_air_date ?? '') : (raw.release_date ?? ''),
+      genres: (raw.genres ?? []).map((g: any) => g.name as string),
+      cast: (raw.credits?.cast ?? [])
+        .slice(0, 10)
+        .map((c: any) => ({
+          name: c.name as string,
+          character: c.character as string,
+          profilePath: (c.profile_path ?? null) as string | null,
+        })),
+    };
   }
 
   getGenres(): Observable<Genre[]> {

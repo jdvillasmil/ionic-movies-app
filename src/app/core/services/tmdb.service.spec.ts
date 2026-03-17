@@ -1,6 +1,6 @@
 import { TestBed, fakeAsync, flushMicrotasks, tick } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { TmdbService, MediaItem, FilterState, TmdbPageResult } from './tmdb.service';
+import { TmdbService, MediaItem, FilterState, TmdbPageResult, MediaDetail } from './tmdb.service';
 import { Firestore } from '@angular/fire/firestore';
 
 // Testable subclass that replaces Firestore methods with spies
@@ -279,9 +279,112 @@ describe('TmdbService', () => {
   });
 
   describe('getDetail()', () => {
-    xit('DETL-01: normalizes movie response — title from raw.title, releaseDate from release_date, genres as string[], top 10 cast', () => {});
-    xit('DETL-01: normalizes TV response — title from raw.name, releaseDate from first_air_date', () => {});
-    xit('DETL-01: passes append_to_response=credits in URL string (not HttpParams)', () => {});
+    const make15Cast = () =>
+      Array.from({ length: 15 }, (_, i) => ({
+        name: `Actor ${i}`,
+        character: `Char ${i}`,
+        profile_path: i % 2 === 0 ? `/profile${i}.jpg` : null,
+      }));
+
+    it('DETL-01: normalizes movie response — title from raw.title, releaseDate from release_date, genres as string[], top 10 cast', fakeAsync(() => {
+      let result: MediaDetail | undefined;
+      service.getDetail(550, 'movie').then((r) => (result = r));
+
+      flushMicrotasks();
+
+      const req = httpMock.expectOne((r) =>
+        r.url.includes('/movie/550') && r.url.includes('append_to_response=credits')
+      );
+      expect(req.request.method).toBe('GET');
+
+      req.flush({
+        id: 550,
+        title: 'Fight Club',
+        release_date: '1999-10-15',
+        overview: 'A classic film',
+        poster_path: '/poster.jpg',
+        genres: [
+          { id: 18, name: 'Drama' },
+          { id: 53, name: 'Thriller' },
+        ],
+        credits: { cast: make15Cast() },
+      });
+
+      flushMicrotasks();
+
+      expect(result).toBeDefined();
+      expect(result!.id).toBe(550);
+      expect(result!.mediaType).toBe('movie');
+      expect(result!.title).toBe('Fight Club');
+      expect(result!.releaseDate).toBe('1999-10-15');
+      expect(result!.overview).toBe('A classic film');
+      expect(result!.posterPath).toBe('/poster.jpg');
+      expect(result!.genres).toEqual(['Drama', 'Thriller']);
+      // Cast sliced to top 10
+      expect(result!.cast.length).toBe(10);
+      expect(result!.cast[0].name).toBe('Actor 0');
+      expect(result!.cast[0].character).toBe('Char 0');
+      expect(result!.cast[0].profilePath).toBe('/profile0.jpg');
+      expect(result!.cast[1].profilePath).toBeNull();
+    }));
+
+    it('DETL-01: normalizes TV response — title from raw.name, releaseDate from first_air_date', fakeAsync(() => {
+      let result: MediaDetail | undefined;
+      service.getDetail(1396, 'tv').then((r) => (result = r));
+
+      flushMicrotasks();
+
+      const req = httpMock.expectOne((r) =>
+        r.url.includes('/tv/1396') && r.url.includes('append_to_response=credits')
+      );
+
+      req.flush({
+        id: 1396,
+        name: 'Breaking Bad',
+        first_air_date: '2008-01-20',
+        overview: 'A chemistry teacher...',
+        poster_path: '/bb.jpg',
+        genres: [{ id: 18, name: 'Drama' }],
+        credits: { cast: make15Cast() },
+      });
+
+      flushMicrotasks();
+
+      expect(result).toBeDefined();
+      expect(result!.id).toBe(1396);
+      expect(result!.mediaType).toBe('tv');
+      expect(result!.title).toBe('Breaking Bad');
+      expect(result!.releaseDate).toBe('2008-01-20');
+      expect(result!.genres).toEqual(['Drama']);
+      expect(result!.cast.length).toBe(10);
+    }));
+
+    it('DETL-01: passes append_to_response=credits in URL string (not HttpParams)', fakeAsync(() => {
+      let result: MediaDetail | undefined;
+      service.getDetail(550, 'movie').then((r) => (result = r));
+
+      flushMicrotasks();
+
+      // Verify the URL contains append_to_response=credits as a query string param
+      const req = httpMock.expectOne((r) => r.url.includes('/movie/550'));
+      // The URL itself should contain append_to_response=credits
+      expect(req.request.url).toContain('append_to_response=credits');
+      // Interceptor adds language params alongside — verify no collision
+      // (The interceptor adds params, but the URL string still includes our param)
+
+      req.flush({
+        id: 550,
+        title: 'Fight Club',
+        release_date: '1999-10-15',
+        overview: '',
+        poster_path: null,
+        genres: [],
+        credits: { cast: [] },
+      });
+
+      flushMicrotasks();
+      expect(result).toBeDefined();
+    }));
   });
 
   describe('normalize()', () => {
