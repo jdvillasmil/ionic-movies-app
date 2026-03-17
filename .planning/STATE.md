@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-media-browsing/03-04-PLAN.md — Phase 3 fully signed off
-last_updated: "2026-03-17T00:36:53.577Z"
+stopped_at: Completed 04-detail-and-reviews/04-01-PLAN.md
+last_updated: "2026-03-17T04:22:21.247Z"
 last_activity: 2026-03-16 — Search page with debounce + media detail stub route added (plan 03-03 complete)
 progress:
   total_phases: 4
   completed_phases: 2
-  total_plans: 7
-  completed_plans: 7
+  total_plans: 11
+  completed_plans: 8
   percent: 100
 ---
 
@@ -37,16 +37,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-07)
 
 **Core value:** Users can search real movies/series, read dual-perspective ratings (normal users vs. critics), and contribute their own scored reviews — all backed by live TMDB data cached in Firestore.
-**Current focus:** Phase 3 — Media Browsing
+**Current focus:** Phase 4 — Detail and Reviews
 
 ## Current Position
 
-Phase: 3 of 4 (Media Browsing)
-Plan: 3 of 4 in current phase (03-01, 03-02, 03-03 complete, 03-04 remaining)
+Phase: 4 of 4 (Detail and Reviews)
+Plan: 1 of 4 in current phase (04-01 complete, 04-02, 04-03, 04-04 remaining)
 Status: In progress
-Last activity: 2026-03-16 — Search page with debounce + media detail stub route added (plan 03-03 complete)
+Last activity: 2026-03-17 — Wave 0 test scaffolds + Firestore collectionGroup fix (plan 04-01 complete)
 
-Progress: [█████████░] 86%
+Progress: [███████░░░] 73%
 
 ## Performance Metrics
 
@@ -75,6 +75,7 @@ Progress: [█████████░] 86%
 | Phase 03-media-browsing P03 | 3 | 2 tasks | 4 files |
 | Phase 03-media-browsing P04 | 3 | 1 tasks | 1 files |
 | Phase 03-media-browsing P04 | 5 | 2 tasks | 1 files |
+| Phase 04-detail-and-reviews P01 | 4 | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -107,6 +108,8 @@ Recent decisions affecting current work:
 - [Phase 03-media-browsing]: MediaDetailPage stub added in Phase 3 with no authGuard — enables card navigation without 404; full implementation deferred to Phase 4
 - [Phase 03-media-browsing]: tmdb.interceptor spec for Bearer header now overrides placeholder bearerToken inline — interceptor only sets Authorization when token is non-placeholder, test must exercise that code path explicitly
 - [Phase 03-media-browsing]: Visual checkpoint pattern: ng test green + ng build clean + human visual approval = phase sign-off (plan 03-04)
+- [Phase 04-detail-and-reviews]: Review documents at media/{mediaId}/reviews/{userId} subcollection — collectionGroup query required for cross-media review lookup in ProfilePage and account deletion
+- [Phase 04-detail-and-reviews]: Wave 0 spec scaffolds use xit so pending tests don't block CI while production code is absent
 
 ### Pending Todos
 
@@ -120,6 +123,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-16T23:32:07.815Z
-Stopped at: Completed 03-media-browsing/03-04-PLAN.md — Phase 3 fully signed off
+Last session: 2026-03-17T04:22:21.243Z
+Stopped at: Completed 04-detail-and-reviews/04-01-PLAN.md
 Resume file: None
