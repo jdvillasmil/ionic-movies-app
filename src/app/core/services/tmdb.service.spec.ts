@@ -278,6 +278,12 @@ describe('TmdbService', () => {
     }));
   });
 
+  describe('getDetail()', () => {
+    xit('DETL-01: normalizes movie response — title from raw.title, releaseDate from release_date, genres as string[], top 10 cast', () => {});
+    xit('DETL-01: normalizes TV response — title from raw.name, releaseDate from first_air_date', () => {});
+    xit('DETL-01: passes append_to_response=credits in URL string (not HttpParams)', () => {});
+  });
+
   describe('normalize()', () => {
     it('maps movie.title to title and release_date year to year', fakeAsync(() => {
       service.setNoCacheHit();
