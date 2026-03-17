@@ -114,6 +114,15 @@ None — build and tests passed after the makeRef override fix.
 - TmdbService.getDetail exports MediaDetail and CastMember types needed by MediaDetailPage
 - plan 04-03 can replace the Phase 3 stub with full MediaDetailPage implementation
 
+## Self-Check: PASSED
+
+- `src/app/core/services/review.service.ts` — FOUND
+- `src/app/core/services/review.service.spec.ts` — FOUND
+- `src/app/core/services/tmdb.service.ts` — FOUND
+- `.planning/phases/04-detail-and-reviews/04-02-SUMMARY.md` — FOUND
+- Commit `7587783` — FOUND
+- Commit `299597e` — FOUND
+
 ---
 *Phase: 04-detail-and-reviews*
 *Completed: 2026-03-17*

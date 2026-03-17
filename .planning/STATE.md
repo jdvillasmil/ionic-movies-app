@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Checkpoint: 04-04 Task 2 awaiting human visual verification"
-last_updated: "2026-03-17T04:39:34.473Z"
+stopped_at: Completed 04-detail-and-reviews/04-04-PLAN.md — Phase 4 sign-off complete, v1.0 milestone achieved
+last_updated: "2026-03-17T05:26:13.894Z"
 last_activity: 2026-03-17 — Wave 0 test scaffolds + Firestore collectionGroup fix (plan 04-01 complete)
 progress:
   total_phases: 4
@@ -94,6 +94,7 @@ Progress: [███████░░░] 73%
 | Phase 04-detail-and-reviews P01 | 4 | 3 tasks | 6 files |
 | Phase 04-detail-and-reviews P02 | 4 | 2 tasks | 4 files |
 | Phase 04-detail-and-reviews P03 | 3 | 2 tasks | 2 files |
+| Phase 04-detail-and-reviews P04 | 40 | 2 tasks | 0 files |
 
 ## Accumulated Context
 
@@ -132,6 +133,7 @@ Recent decisions affecting current work:
 - [Phase 04-detail-and-reviews]: Protected methods (makeRef, runTx, getDocSnap, getDocsSnap) in ReviewService enable full unit test isolation without constructor injection complexity
 - [Phase 04-detail-and-reviews]: TmdbImagePipe imported from core/pipes/tmdb-image.pipe (actual path) not shared/pipes as plan doc noted
 - [Phase 04-detail-and-reviews]: @Injectable() required on TestableTmdbService and TestableReviewService — Angular 20 DI raises deprecation warnings when inherited @Injectable() is not overridden explicitly
+- [Phase 04-detail-and-reviews]: Visual checkpoint pattern reused from Phase 3: test gate + build gate + human approval = phase sign-off (plan 04-04)
 
 ### Pending Todos
 
@@ -145,6 +147,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-17T04:39:30.842Z
-Stopped at: Checkpoint: 04-04 Task 2 awaiting human visual verification
+Last session: 2026-03-17T05:26:13.890Z
+Stopped at: Completed 04-detail-and-reviews/04-04-PLAN.md — Phase 4 sign-off complete, v1.0 milestone achieved
 Resume file: None
