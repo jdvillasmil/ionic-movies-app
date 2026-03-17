@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-detail-and-reviews/04-02-PLAN.md
-last_updated: "2026-03-17T04:29:29.090Z"
+stopped_at: Completed 04-detail-and-reviews/04-03-PLAN.md
+last_updated: "2026-03-17T04:34:37.972Z"
 last_activity: 2026-03-17 — Wave 0 test scaffolds + Firestore collectionGroup fix (plan 04-01 complete)
 progress:
   total_phases: 4
   completed_phases: 2
   total_plans: 11
-  completed_plans: 9
+  completed_plans: 10
   percent: 82
 ---
 
@@ -93,6 +93,7 @@ Progress: [███████░░░] 73%
 | Phase 03-media-browsing P04 | 5 | 2 tasks | 1 files |
 | Phase 04-detail-and-reviews P01 | 4 | 3 tasks | 6 files |
 | Phase 04-detail-and-reviews P02 | 4 | 2 tasks | 4 files |
+| Phase 04-detail-and-reviews P03 | 3 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -129,6 +130,7 @@ Recent decisions affecting current work:
 - [Phase 04-detail-and-reviews]: Wave 0 spec scaffolds use xit so pending tests don't block CI while production code is absent
 - [Phase 04-detail-and-reviews]: TestableReviewService overrides makeRef to return plain path objects — Firestore doc() requires real instance, protected method override matches established TestableTmdbService pattern
 - [Phase 04-detail-and-reviews]: Protected methods (makeRef, runTx, getDocSnap, getDocsSnap) in ReviewService enable full unit test isolation without constructor injection complexity
+- [Phase 04-detail-and-reviews]: TmdbImagePipe imported from core/pipes/tmdb-image.pipe (actual path) not shared/pipes as plan doc noted
 
 ### Pending Todos
 
@@ -142,6 +144,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-17T04:29:29.086Z
-Stopped at: Completed 04-detail-and-reviews/04-02-PLAN.md
+Last session: 2026-03-17T04:34:37.968Z
+Stopped at: Completed 04-detail-and-reviews/04-03-PLAN.md
 Resume file: None
