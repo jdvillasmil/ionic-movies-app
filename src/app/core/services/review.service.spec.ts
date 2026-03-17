@@ -1,4 +1,5 @@
 import { TestBed, fakeAsync, flushMicrotasks } from '@angular/core/testing';
+import { Injectable } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import { ReviewService, ReviewDoc, MediaSummary } from './review.service';
 
@@ -21,6 +22,7 @@ function makeMockTransaction(snapsByRef: Map<string, { exists: boolean; data?: a
 // ---------------------------------------------------------------------------
 // TestableReviewService — overrides runTransaction to run synchronously in tests
 // ---------------------------------------------------------------------------
+@Injectable()
 class TestableReviewService extends ReviewService {
   // Snapshots to feed into the transaction callback
   snapshotMap: Map<string, { exists: boolean; data?: any }> = new Map();

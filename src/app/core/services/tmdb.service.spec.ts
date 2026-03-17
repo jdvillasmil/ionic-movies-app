@@ -1,10 +1,12 @@
 import { TestBed, fakeAsync, flushMicrotasks, tick } from '@angular/core/testing';
+import { Injectable } from '@angular/core';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TmdbService, MediaItem, FilterState, TmdbPageResult, MediaDetail } from './tmdb.service';
 import { Firestore } from '@angular/fire/firestore';
 
 // Testable subclass that replaces Firestore methods with spies
 // Overrides path-based methods so tests don't need a real Firestore instance
+@Injectable()
 class TestableTmdbService extends TmdbService {
   getDocSpy = jasmine.createSpy('firestoreGet');
   setDocSpy = jasmine.createSpy('firestoreSet');
