@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-detail-and-reviews/04-03-PLAN.md
-last_updated: "2026-03-17T04:34:37.972Z"
+stopped_at: "Checkpoint: 04-04 Task 2 awaiting human visual verification"
+last_updated: "2026-03-17T04:39:34.473Z"
 last_activity: 2026-03-17 — Wave 0 test scaffolds + Firestore collectionGroup fix (plan 04-01 complete)
 progress:
   total_phases: 4
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 11
-  completed_plans: 10
+  completed_plans: 11
   percent: 82
 ---
 
@@ -131,6 +131,7 @@ Recent decisions affecting current work:
 - [Phase 04-detail-and-reviews]: TestableReviewService overrides makeRef to return plain path objects — Firestore doc() requires real instance, protected method override matches established TestableTmdbService pattern
 - [Phase 04-detail-and-reviews]: Protected methods (makeRef, runTx, getDocSnap, getDocsSnap) in ReviewService enable full unit test isolation without constructor injection complexity
 - [Phase 04-detail-and-reviews]: TmdbImagePipe imported from core/pipes/tmdb-image.pipe (actual path) not shared/pipes as plan doc noted
+- [Phase 04-detail-and-reviews]: @Injectable() required on TestableTmdbService and TestableReviewService — Angular 20 DI raises deprecation warnings when inherited @Injectable() is not overridden explicitly
 
 ### Pending Todos
 
@@ -144,6 +145,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-17T04:34:37.968Z
-Stopped at: Completed 04-detail-and-reviews/04-03-PLAN.md
+Last session: 2026-03-17T04:39:30.842Z
+Stopped at: Checkpoint: 04-04 Task 2 awaiting human visual verification
 Resume file: None
