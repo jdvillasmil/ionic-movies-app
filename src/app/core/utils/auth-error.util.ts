@@ -1,5 +1,3 @@
-import { isDevMode } from '@angular/core';
-
 const MESSAGES: Record<string, string> = {
   'auth/email-already-in-use':    'Este correo ya está registrado',
   'auth/invalid-credential':      'Correo o contraseña incorrectos',
@@ -12,8 +10,6 @@ const MESSAGES: Record<string, string> = {
 };
 
 export function getAuthErrorMessage(error: unknown): string {
-  const code = (error as { code?: string })?.code ?? '';
-  if (MESSAGES[code]) return MESSAGES[code];
-  if (isDevMode()) return (error as Error)?.message ?? 'Error desconocido';
-  return 'Ocurrió un error. Inténtalo de nuevo';
+  const code = (error as any)?.code ?? 'unknown';
+  return MESSAGES[code] ?? `Error: ${code}`;
 }

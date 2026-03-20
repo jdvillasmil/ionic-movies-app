@@ -1,2 +1,8 @@
 // For information on how to create your own theme, please refer to:
 // https://ionicframework.com/docs/theming/
+
+// Force dark background unconditionally — overrides iOS Safari light mode
+body {
+  background-color: #0f0f1a !important;
+  color: #f8fafc;
+}

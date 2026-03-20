@@ -32,6 +32,13 @@
  * https://ionicframework.com/docs/theming/dark-mode
  */
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+@import "@ionic/angular/css/palettes/dark.always.css";
+
+:root {
+  color-scheme: dark;
+}
+
+ion-app {
+  --ion-background-color: #0f0f1a;
+  --ion-text-color: #f8fafc;
+}
