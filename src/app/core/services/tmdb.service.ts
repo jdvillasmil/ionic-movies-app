@@ -175,19 +175,26 @@ export class TmdbService {
   }
 
   private async cacheFirst<T>(cacheKey: string, fetchFn: () => Observable<T>): Promise<T> {
-    const snapshot = await this.firestoreGet(`tmdb_cache/${cacheKey}`);
-
-    if (snapshot.exists()) {
-      const data = snapshot.data() as { cachedAt: number; results: T };
-      if (Date.now() - data.cachedAt < this.CACHE_TTL_MS) {
-        return data.results;
+    try {
+      const snapshot = await this.firestoreGet(`tmdb_cache/${cacheKey}`);
+      if (snapshot.exists()) {
+        const data = snapshot.data() as { cachedAt: number; results: T };
+        if (Date.now() - data.cachedAt < this.CACHE_TTL_MS) {
+          return data.results;
+        }
       }
+    } catch {
+      // Cache unavailable — proceed to fetch from TMDB directly
     }
 
     return new Promise<T>((resolve, reject) => {
       fetchFn().subscribe({
         next: async (result) => {
-          await this.firestoreSet(`tmdb_cache/${cacheKey}`, { cachedAt: Date.now(), results: result });
+          try {
+            await this.firestoreSet(`tmdb_cache/${cacheKey}`, { cachedAt: Date.now(), results: result });
+          } catch {
+            // Cache write failed — ignore, results still returned
+          }
           resolve(result);
         },
         error: reject,

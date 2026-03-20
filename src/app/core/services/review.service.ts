@@ -7,7 +7,9 @@ import {
   setDoc,
   deleteDoc,
   collection,
+  collectionGroup,
   query,
+  where,
   orderBy,
   runTransaction,
 } from '@angular/fire/firestore';
@@ -41,6 +43,16 @@ export class ReviewService {
   async getUserReview(mediaId: string, userId: string): Promise<ReviewDoc | null> {
     const snap = await this.getDocSnap(`media/${mediaId}/reviews/${userId}`);
     return snap.exists() ? (snap.data() as ReviewDoc) : null;
+  }
+
+  async getUserReviews(uid: string): Promise<ReviewDoc[]> {
+    try {
+      const q = query(collectionGroup(this.firestore, 'reviews'), where('userId', '==', uid));
+      const snap = await getDocs(q);
+      return snap.docs.map((d) => d.data() as ReviewDoc);
+    } catch {
+      return [];
+    }
   }
 
   async getMediaSummary(mediaId: string): Promise<MediaSummary | null> {

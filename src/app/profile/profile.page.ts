@@ -26,16 +26,9 @@ import { addIcons } from 'ionicons';
 import { pencilOutline, checkmarkOutline, closeOutline, logOutOutline, trashOutline } from 'ionicons/icons';
 import { Observable, of, Subscription, firstValueFrom } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import {
-  Firestore,
-  collectionGroup,
-  query,
-  where,
-  getDocs,
-} from '@angular/fire/firestore';
-
 import { AuthService } from '../core/services/auth.service';
 import { UserService, UserProfile } from '../core/services/user.service';
+import { ReviewService } from '../core/services/review.service';
 import { UserAvatarComponent } from '../shared/components/user-avatar/user-avatar.component';
 
 interface ReviewPreview {
@@ -355,10 +348,10 @@ interface ReviewPreview {
 export class ProfilePage implements OnInit, OnDestroy {
   private authService = inject(AuthService);
   private userService = inject(UserService);
+  private reviewService = inject(ReviewService);
   private router = inject(Router);
   private toastController = inject(ToastController);
   private alertController = inject(AlertController);
-  private firestore = inject(Firestore);
 
   profile$!: Observable<UserProfile | undefined>;
   editMode = false;
@@ -475,15 +468,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   private async loadReviews(uid: string): Promise<void> {
-    try {
-      const reviewsRef = collectionGroup(this.firestore, 'reviews');
-      const reviewsQuery = query(reviewsRef, where('userId', '==', uid));
-      const snapshot = await getDocs(reviewsQuery);
-      this.reviews = snapshot.docs.map((d) => d.data() as ReviewPreview);
-    } catch {
-      // Collection may not exist yet (Phase 4 creates reviews) — render empty state
-      this.reviews = [];
-    }
+    this.reviews = (await this.reviewService.getUserReviews(uid)) as unknown as ReviewPreview[];
   }
 
   private async showToast(
