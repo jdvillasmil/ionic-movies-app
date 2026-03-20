@@ -22,6 +22,7 @@ import {
 } from '@ionic/angular/standalone';
 
 import { AuthService } from '../core/services/auth.service';
+import { getAuthErrorMessage } from '../core/utils/auth-error.util';
 
 @Component({
   selector: 'app-login',
@@ -99,7 +100,7 @@ import { AuthService } from '../core/services/auth.service';
               <ion-note color="danger" class="field-error">La contraseña es obligatoria</ion-note>
             }
             @if (loginError) {
-              <ion-note color="danger" class="field-error">Correo o contraseña incorrectos</ion-note>
+              <ion-note color="danger" class="field-error">{{ loginError }}</ion-note>
             }
           </div>
 
@@ -229,7 +230,7 @@ export class LoginPage {
   private readonly router = inject(Router);
   private readonly toastController = inject(ToastController);
 
-  loginError = false;
+  loginError = '';
   isLoading = false;
 
   form: FormGroup = this.fb.group({
@@ -238,7 +239,7 @@ export class LoginPage {
   });
 
   async onSubmit(): Promise<void> {
-    this.loginError = false;
+    this.loginError = '';
     this.form.markAllAsTouched();
 
     if (this.form.invalid) return;
@@ -249,8 +250,8 @@ export class LoginPage {
     try {
       await firstValueFrom(this.authService.login(email, password));
       await this.router.navigate(['/tabs/home']);
-    } catch {
-      this.loginError = true;
+    } catch (error: unknown) {
+      this.loginError = getAuthErrorMessage(error);
     } finally {
       this.isLoading = false;
     }

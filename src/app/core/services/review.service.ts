@@ -24,6 +24,10 @@ export interface ReviewDoc {
   updatedAt: number;
 }
 
+export interface UserReview extends ReviewDoc {
+  mediaId: string;
+}
+
 export interface MediaSummary {
   normalCount: number;
   normalTotal: number;
@@ -45,11 +49,14 @@ export class ReviewService {
     return snap.exists() ? (snap.data() as ReviewDoc) : null;
   }
 
-  async getUserReviews(uid: string): Promise<ReviewDoc[]> {
+  async getUserReviews(uid: string): Promise<UserReview[]> {
     try {
       const q = query(collectionGroup(this.firestore, 'reviews'), where('userId', '==', uid));
       const snap = await getDocs(q);
-      return snap.docs.map((d) => d.data() as ReviewDoc);
+      return snap.docs.map((d) => ({
+        ...(d.data() as ReviewDoc),
+        mediaId: d.ref.parent.parent?.id ?? '',
+      }));
     } catch {
       return [];
     }

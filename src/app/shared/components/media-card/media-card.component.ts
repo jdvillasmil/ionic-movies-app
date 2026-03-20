@@ -1,49 +1,76 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { IonCard, IonCardContent, IonImg } from '@ionic/angular/standalone';
+import { DecimalPipe } from '@angular/common';
 import { MediaItem } from '../../../core/services/tmdb.service';
 import { TmdbImagePipe } from '../../../core/pipes/tmdb-image.pipe';
 
 @Component({
   selector: 'app-media-card',
   standalone: true,
-  imports: [IonCard, IonCardContent, IonImg, TmdbImagePipe],
+  imports: [DecimalPipe, TmdbImagePipe],
   template: `
-    <ion-card class="media-card" (click)="cardTap.emit(item)">
-      <ion-img [src]="item.posterPath | tmdbImage:'w185'" class="card-poster"></ion-img>
-      <ion-card-content class="card-body">
+    <div class="media-card" (click)="cardTap.emit(item)">
+      <div class="poster-wrapper">
+        <img
+          [src]="item.posterPath | tmdbImage:'w185'"
+          [alt]="item.title"
+          class="poster-img"
+          loading="lazy"
+        />
+        <span class="score-badge">{{ item.voteAverage | number:'1.1-1' }}</span>
+      </div>
+      <div class="card-body">
         <p class="card-title">{{ item.title }}</p>
-        <p class="card-year">{{ item.year }}</p>
-      </ion-card-content>
-    </ion-card>
+      </div>
+    </div>
   `,
   styles: [`
     :host {
       display: block;
     }
     .media-card {
-      margin: 0;
       cursor: pointer;
+      border-radius: 10px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
-    .card-poster {
+    .poster-wrapper {
+      position: relative;
       width: 100%;
       aspect-ratio: 2 / 3;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .poster-img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
+      display: block;
+    }
+    .score-badge {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      background: rgba(0, 0, 0, 0.72);
+      color: #facc15;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 6px;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
     }
     .card-body {
-      padding: 8px;
+      padding: 6px 8px 8px;
     }
     .card-title {
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 600;
-      margin: 0 0 4px 0;
+      margin: 0;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-    }
-    .card-year {
-      font-size: 12px;
-      color: var(--ion-color-medium);
-      margin: 0;
+      color: var(--ion-text-color, #f8fafc);
     }
   `],
 })

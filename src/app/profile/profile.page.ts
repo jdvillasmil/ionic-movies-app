@@ -28,16 +28,8 @@ import { Observable, of, Subscription, firstValueFrom } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AuthService } from '../core/services/auth.service';
 import { UserService, UserProfile } from '../core/services/user.service';
-import { ReviewService } from '../core/services/review.service';
+import { ReviewService, UserReview } from '../core/services/review.service';
 import { UserAvatarComponent } from '../shared/components/user-avatar/user-avatar.component';
-
-interface ReviewPreview {
-  mediaId: string;
-  mediaTitle: string;
-  score: number;
-  text: string;
-  createdAt: number;
-}
 
 @Component({
   selector: 'app-profile',
@@ -161,7 +153,7 @@ interface ReviewPreview {
             <ion-card *ngFor="let review of reviews" class="review-card">
               <ion-card-content>
                 <div class="review-header">
-                  <span class="review-title">{{ review.mediaTitle }}</span>
+                  <span class="review-title">{{ review.mediaId }}</span>
                   <ion-badge color="warning" class="score-badge">
                     {{ review.score }}/10
                   </ion-badge>
@@ -356,7 +348,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   profile$!: Observable<UserProfile | undefined>;
   editMode = false;
   isSaving = false;
-  reviews: ReviewPreview[] = [];
+  reviews: UserReview[] = [];
 
   displayNameCtrl = new FormControl('', { nonNullable: true });
   avatarUrlCtrl = new FormControl('', { nonNullable: true });
@@ -468,7 +460,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   private async loadReviews(uid: string): Promise<void> {
-    this.reviews = (await this.reviewService.getUserReviews(uid)) as unknown as ReviewPreview[];
+    this.reviews = await this.reviewService.getUserReviews(uid);
   }
 
   private async showToast(

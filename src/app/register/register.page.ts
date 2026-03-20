@@ -30,6 +30,7 @@ import {
 
 import { AuthService } from '../core/services/auth.service';
 import { UserService } from '../core/services/user.service';
+import { getAuthErrorMessage } from '../core/utils/auth-error.util';
 
 function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
   const password = control.get('password');
@@ -385,7 +386,7 @@ export class RegisterPage {
           // Cleanup failed — ignore to surface original error
         }
       }
-      this.authError = this.getErrorMessage(error);
+      this.authError = getAuthErrorMessage(error);
     } finally {
       this.isLoading = false;
     }
@@ -405,14 +406,5 @@ export class RegisterPage {
     await toast.present();
   }
 
-  private getErrorMessage(error: unknown): string {
-    const code = (error as { code?: string })?.code ?? '';
-    if (code === 'auth/email-already-in-use') {
-      return 'Este correo ya está registrado';
-    }
-    if (code === 'auth/invalid-email') {
-      return 'Correo electrónico inválido';
-    }
-    return 'Ocurrió un error. Inténtalo de nuevo';
-  }
 }
+
