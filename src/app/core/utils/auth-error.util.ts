@@ -10,6 +10,6 @@ const MESSAGES: Record<string, string> = {
 };
 
 export function getAuthErrorMessage(error: unknown): string {
-  const code = (error as any)?.code ?? 'unknown';
-  return MESSAGES[code] ?? `Error: ${code}`;
+  const code = (error as { code?: string })?.code ?? '';
+  return MESSAGES[code] ?? 'Ocurrió un error. Inténtalo de nuevo';
 }

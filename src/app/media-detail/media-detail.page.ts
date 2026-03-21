@@ -37,8 +37,18 @@ import { TmdbImagePipe } from '../core/pipes/tmdb-image.pipe';
     </ion-header>
 
     <ion-content class="ion-padding">
+      <!-- Error state -->
+      <ng-container *ngIf="loadError">
+        <div style="text-align:center; padding: 48px 24px;">
+          <p style="color: var(--ion-color-medium); margin-bottom: 16px;">
+            No se pudo cargar la información. Verifica tu conexión.
+          </p>
+          <ion-button (click)="retry()">Reintentar</ion-button>
+        </div>
+      </ng-container>
+
       <!-- Loading skeleton -->
-      <ng-container *ngIf="isLoading">
+      <ng-container *ngIf="isLoading && !loadError">
         <ion-skeleton-text animated style="width: 100%; height: 300px;"></ion-skeleton-text>
         <ion-skeleton-text animated style="width: 60%; height: 24px; margin-top: 16px;"></ion-skeleton-text>
         <ion-skeleton-text animated style="width: 40%; height: 16px; margin-top: 8px;"></ion-skeleton-text>
@@ -239,6 +249,7 @@ export class MediaDetailPage implements OnInit {
   currentProfile: UserProfile | undefined;
   isLoading = true;
   isSubmitting = false;
+  loadError = false;
 
   reviewForm = new FormGroup({
     score: new FormControl(5, {
@@ -266,33 +277,46 @@ export class MediaDetailPage implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    const [detail, summary, reviews] = await Promise.all([
-      this.tmdbService.getDetail(this.id, this.mediaType),
-      this.reviewService.getMediaSummary(this.mediaId),
-      this.reviewService.getReviews(this.mediaId),
-    ]);
+    await this.loadData();
+  }
 
-    this.detail = detail;
-    this.summary = summary;
-    this.reviews = reviews;
+  async retry(): Promise<void> {
+    this.loadError = false;
+    this.isLoading = true;
+    await this.loadData();
+  }
 
-    const currentUser = this.authService.currentUser;
-    if (currentUser) {
-      const uid = currentUser.uid;
-      const [userReview, profile] = await Promise.all([
-        this.reviewService.getUserReview(this.mediaId, uid),
-        firstValueFrom(this.userService.getUserDoc(uid)),
+  private async loadData(): Promise<void> {
+    try {
+      const [detail, summary, reviews] = await Promise.all([
+        this.tmdbService.getDetail(this.id, this.mediaType),
+        this.reviewService.getMediaSummary(this.mediaId),
+        this.reviewService.getReviews(this.mediaId),
       ]);
-      this.userReview = userReview;
-      this.currentProfile = profile;
 
-      // Pre-populate form if user already has a review
-      if (userReview) {
-        this.reviewForm.setValue({ score: userReview.score, text: userReview.text });
+      this.detail = detail;
+      this.summary = summary;
+      this.reviews = reviews;
+
+      const currentUser = this.authService.currentUser;
+      if (currentUser) {
+        const uid = currentUser.uid;
+        const [userReview, profile] = await Promise.all([
+          this.reviewService.getUserReview(this.mediaId, uid),
+          firstValueFrom(this.userService.getUserDoc(uid)),
+        ]);
+        this.userReview = userReview;
+        this.currentProfile = profile;
+
+        if (userReview) {
+          this.reviewForm.setValue({ score: userReview.score, text: userReview.text });
+        }
       }
+    } catch {
+      this.loadError = true;
+    } finally {
+      this.isLoading = false;
     }
-
-    this.isLoading = false;
   }
 
   async submitReview(): Promise<void> {
@@ -306,6 +330,7 @@ export class MediaDetailPage implements OnInit {
         role: this.currentProfile.role,
         score: this.reviewForm.controls.score.value,
         text: this.reviewForm.controls.text.value,
+        mediaTitle: this.detail?.title,
         createdAt: now,
         updatedAt: now,
       };
@@ -357,6 +382,8 @@ export class MediaDetailPage implements OnInit {
               this.reviewForm.reset({ score: 5, text: '' });
               await this.reloadSummaryAndReviews();
               await this.showToast('Reseña eliminada');
+            } catch {
+              await this.showToast('Error al eliminar la reseña. Inténtalo de nuevo', 'danger');
             } finally {
               this.isSubmitting = false;
             }
@@ -376,11 +403,11 @@ export class MediaDetailPage implements OnInit {
     this.reviews = reviews;
   }
 
-  private async showToast(message: string): Promise<void> {
+  private async showToast(message: string, color: 'success' | 'danger' = 'success'): Promise<void> {
     const toast = await this.toastController.create({
       message,
       duration: 2000,
-      color: 'success',
+      color,
     });
     await toast.present();
   }

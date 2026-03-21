@@ -153,7 +153,7 @@ import { UserAvatarComponent } from '../shared/components/user-avatar/user-avata
             <ion-card *ngFor="let review of reviews" class="review-card">
               <ion-card-content>
                 <div class="review-header">
-                  <span class="review-title">{{ review.mediaId }}</span>
+                  <span class="review-title">{{ review.mediaTitle || ('Película #' + review.mediaId) }}</span>
                   <ion-badge color="warning" class="score-badge">
                     {{ review.score }}/10
                   </ion-badge>
