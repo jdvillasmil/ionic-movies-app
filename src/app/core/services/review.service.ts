@@ -53,11 +53,13 @@ export class ReviewService {
     try {
       const q = query(collectionGroup(this.firestore, 'reviews'), where('userId', '==', uid));
       const snap = await getDocs(q);
+      console.log('getUserReviews found:', snap.size, 'docs');
       return snap.docs.map((d) => ({
         ...(d.data() as ReviewDoc),
         mediaId: d.ref.parent.parent?.id ?? '',
       }));
-    } catch {
+    } catch (error) {
+      console.error('getUserReviews failed:', error);
       return [];
     }
   }
