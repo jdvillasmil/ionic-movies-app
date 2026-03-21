@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
-export type TmdbImageSize = 'w185' | 'w500' | 'original';
+export type TmdbImageSize = 'w92' | 'w154' | 'w185' | 'w342' | 'w500' | 'w780' | 'original';
 
 const PLACEHOLDER = 'assets/img/placeholder-poster.png';
 

@@ -12,7 +12,7 @@ import { TmdbImagePipe } from '../../../core/pipes/tmdb-image.pipe';
       <div class="poster-wrapper">
         @if (item.posterPath) {
           <img
-            [src]="item.posterPath | tmdbImage:'w185'"
+            [src]="item.posterPath | tmdbImage:'w342'"
             [alt]="item.title"
             class="poster-img"
             loading="lazy"
@@ -41,6 +41,7 @@ import { TmdbImagePipe } from '../../../core/pipes/tmdb-image.pipe';
   styles: [`
     :host {
       display: block;
+      width: 100%;
     }
     .media-card {
       cursor: pointer;
