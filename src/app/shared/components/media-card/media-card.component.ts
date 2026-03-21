@@ -35,6 +35,10 @@ import { TmdbImagePipe } from '../../../core/pipes/tmdb-image.pipe';
       </div>
       <div class="card-body">
         <p class="card-title">{{ item.title }}</p>
+        <p class="card-meta">
+          <span class="meta-year">{{ item.year }}</span>
+          <span class="meta-score">★ {{ item.voteAverage | number:'1.1-1' }}</span>
+        </p>
       </div>
     </div>
   `,
@@ -90,16 +94,30 @@ import { TmdbImagePipe } from '../../../core/pipes/tmdb-image.pipe';
       -webkit-backdrop-filter: blur(4px);
     }
     .card-body {
-      padding: 6px 8px 8px;
+      padding: 6px 8px 10px;
     }
     .card-title {
       font-size: 12px;
       font-weight: 600;
-      margin: 0;
+      margin: 0 0 4px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       color: var(--ion-text-color, #f8fafc);
+    }
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0;
+      font-size: 11px;
+    }
+    .meta-year {
+      color: var(--ion-color-medium, #8899aa);
+    }
+    .meta-score {
+      color: #facc15;
+      font-weight: 600;
     }
   `],
 })
