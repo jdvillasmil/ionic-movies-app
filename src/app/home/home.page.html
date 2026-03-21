@@ -9,32 +9,34 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <div style="width:100%">
 
-  <!-- Skeleton loading state -->
-  <div *ngIf="isLoading" class="media-grid">
-    <div *ngFor="let s of skeletonItems" class="skeleton-card">
-      <ion-skeleton-text [animated]="true" class="skeleton-poster"></ion-skeleton-text>
-      <div class="skeleton-body">
-        <ion-skeleton-text [animated]="true" class="skeleton-title"></ion-skeleton-text>
-        <ion-skeleton-text [animated]="true" class="skeleton-year"></ion-skeleton-text>
+    <!-- Skeleton loading state -->
+    <div *ngIf="isLoading" class="media-grid">
+      <div *ngFor="let s of skeletonItems" class="skeleton-card">
+        <ion-skeleton-text [animated]="true" class="skeleton-poster"></ion-skeleton-text>
+        <div class="skeleton-body">
+          <ion-skeleton-text [animated]="true" class="skeleton-title"></ion-skeleton-text>
+          <ion-skeleton-text [animated]="true" class="skeleton-year"></ion-skeleton-text>
+        </div>
       </div>
     </div>
+
+    <!-- Real content grid -->
+    <div *ngIf="!isLoading" class="media-grid">
+      <app-media-card
+        *ngFor="let item of items"
+        [item]="item"
+        (cardTap)="navigateToDetail($event)">
+      </app-media-card>
+    </div>
+
+    <!-- Infinite scroll -->
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" [disabled]="allLoaded">
+      <ion-infinite-scroll-content loadingText="Cargando..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
   </div>
-
-  <!-- Real content grid -->
-  <div *ngIf="!isLoading" class="media-grid">
-    <app-media-card
-      *ngFor="let item of items"
-      [item]="item"
-      (cardTap)="navigateToDetail($event)">
-    </app-media-card>
-  </div>
-
-  <!-- Infinite scroll -->
-  <ion-infinite-scroll (ionInfinite)="loadMore($event)" [disabled]="allLoaded">
-    <ion-infinite-scroll-content loadingText="Cargando..."></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-
 </ion-content>
 
 <!-- Filter modal -->
