@@ -82,12 +82,22 @@ import { TmdbImagePipe } from '../core/pipes/tmdb-image.pipe';
           <ion-card-content>
             <h2>Calificaciones</h2>
             <p>
-              <strong>Usuarios:</strong>
-              {{ normalAvg | number:'1.1-1' }} ({{ summary?.normalCount ?? 0 }} reseñas)
+              <strong>Usuarios: </strong>
+              <ng-container *ngIf="summary && summary.normalCount > 0; else noNormalRating">
+                {{ normalAvg | number:'1.1-1' }}/10 ({{ summary.normalCount }} reseñas)
+              </ng-container>
+              <ng-template #noNormalRating>
+                <span style="color: var(--ion-color-medium)">Sin calificaciones aún</span>
+              </ng-template>
             </p>
             <p>
-              <strong>Críticos:</strong>
-              {{ criticAvg | number:'1.1-1' }} ({{ summary?.criticCount ?? 0 }} reseñas)
+              <strong>Críticos: </strong>
+              <ng-container *ngIf="summary && summary.criticCount > 0; else noCriticRating">
+                {{ criticAvg | number:'1.1-1' }}/10 ({{ summary.criticCount }} reseñas)
+              </ng-container>
+              <ng-template #noCriticRating>
+                <span style="color: var(--ion-color-medium)">Sin calificaciones aún</span>
+              </ng-template>
             </p>
           </ion-card-content>
         </ion-card>
